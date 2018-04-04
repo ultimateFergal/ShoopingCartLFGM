@@ -1,0 +1,69 @@
+<app-nav-bar [generalOrderedCount]="generalOrderedCount"></app-nav-bar>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+
+  
+      <!--     <link rel="stylesheet" href="css/style.css"> -->
+
+<h1>Carrito de compras</h1>
+
+<div class="shopping-cart">
+
+  <div class="column-labels">
+    <label class="product-image">Image</label>
+    <label class="product-details">Product</label>
+    <label class="product-price">Price</label>
+    <label class="product-quantity">Quantity</label>
+    <label class="product-removal">Remove</label>
+    <label class="product-line-price">Total</label>
+  </div>
+
+  <div *ngFor="let productOrdered of productosCarrito">
+  <div class="product">
+    <div class="product-image">
+      <img src="https://s.cdpn.io/3/dingo-dog-bones.jpg">
+    </div>
+    <div class="product-details">
+      <div class="product-title">{{ productOrdered.name }}</div>
+      <p class="product-description">Lorem ipsum dolor sit amet, antiopam consequat assueverit ad est.</p>
+    </div>
+    <div>{{ productOrdered.price }}</div>
+    <div class="product-quantity">
+      <input type="number" value="{{ productOrdered.quantityOrdered }}" min="1" (change)="quantityChange($event.target.value, productOrdered.id)" (input)="quantityChange($event.target.value, productOrdered.id)">
+    </div>
+    <div class="product-removal">
+      <button class="remove-product" (click)="remove(productOrdered.id)">
+        Remove
+      </button>
+    </div>
+    <!-- <div class="product-line-price">{{ total }}</div> -->
+  </div>
+</div>
+
+
+  <div class="totals">
+<!--     <div class="totals-item">
+      <label>Subtotal</label>
+      <div class="totals-value" id="cart-subtotal">71.97</div>
+    </div>
+    <div class="totals-item">
+      <label>Tax (5%)</label>
+      <div class="totals-value" id="cart-tax">3.60</div>
+    </div>
+    <div class="totals-item">
+      <label>Shipping</label>
+      <div class="totals-value" id="cart-shipping">15.00</div>
+    </div> -->
+    <div class="totals-item totals-item-total">
+      <label>Grand Total</label>
+      <div class="totals-value" id="cart-total">{{ total }}</div>
+    </div>
+  </div>
+      
+      <button class="checkout"> <a [routerLink]="['/checkout']" >Checkout></a></button>
+
+</div>
+<script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+
+
+
+  <script  src="js/index.js"></script>

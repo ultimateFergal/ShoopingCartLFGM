@@ -1,0 +1,119 @@
+<app-nav-bar [generalOrderedCount]="generalOrderedCount"></app-nav-bar>
+<div class="row">
+    <div class="col-md-3"><app-niveles (nivelClicked)="onNivelClicked($event)"></app-niveles></div>
+    <div class="sticky col-md-8">
+
+         <div class="row">
+            <h2 class="col-xs-6">{{title}}</h2>
+            <div class="col-xs-2">
+                <label class="label-control">Ver filas</label>
+                <select class="form-control input-sm" [(ngModel)]="rowsOnPage">
+                    <option [ngValue]="5">5</option>
+                    <option [ngValue]="10">10</option>
+                    <option [ngValue]="15">15</option>
+                    <option [ngValue]="100">100</option>
+                </select>
+            </div>
+            <div class="col-xs-4">
+                <div class="row">
+                    <label class="col-xs-12 label-control">Sort by</label>
+                </div>
+                <div class="col-xs-6">
+                    <div class="row">
+                        <select class="form-control input-sm" [(ngModel)]="sortBy">
+                            <option ngValue="name">Nombre</option>
+                            <option ngValue="price">Precio</option>
+                            <option ngValue="quantity">Cantidad</option>
+                            <option [ngValue]="sortByWordLength">Disponibilidad</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-xs-6">
+                    <div class="row">
+                        <select class="form-control input-sm" [(ngModel)]="sortOrder">
+                            <option ngValue="asc">Ascendente</option>
+                            <option ngValue="desc">Descendente</option>
+                            <!-- <option ngValue="badValue">Bad value</option> -->
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading">Lista de productos</div>
+
+            
+            <table class="table table-striped table-responsive" [mfData]="data | dataFilter : filterQuery | dataFilterAvailable : filterQuery2 | dataFilterQuantity : filterQuery3 | dataFilterPriceRange : filterQuery4" #mf="mfDataTable"
+                   [mfRowsOnPage]="rowsOnPage" [(mfSortBy)]="sortBy" [(mfSortOrder)]="sortOrder">
+                <thead>
+                    <tr>
+                        <th colspan="1">
+                            Filtrar por Nombre:
+                            <input class="form-control" [(ngModel)]="filterQuery"/>
+                        </th>
+                        <th colspan="1">
+                            Filtrar por Disponibilidad:
+                            <select class="form-control" [(ngModel)]="filterQuery2">
+                                <option value="Todos">Todos</option>
+                                <option value="true">Disponible</option>
+                                <option value="false">Agotado</option>
+                            </select>
+                        </th>
+                        <th colspan="2">
+                            Filtrar por Cantidad en stock:
+                            <input type="number" class="form-control" [(ngModel)]="filterQuery3"/>
+                        </th>
+                        <th colspan="2">
+                            Filtrar por Rango de precios:
+                            <select class="form-control" [(ngModel)]="filterQuery4">
+                                <option value="Todos">Todos</option>
+                                <option value="1-500">$1 - $500</option>
+                                <option value="501-1500">$501 - $1500</option>
+                                <option value="1501-3000">$1501 - $3000</option>
+                                <option value="3001-6000">$3001 - $6000</option>
+                                <option value="6001-10000">$6001 - $10000</option>
+                                <option value="10001-20000">$10001 - $20000</option>
+                            </select>
+                        </th>                    
+                    </tr>
+                <tr>
+                    <th style="width: 20%">
+                        <mfDefaultSorter by="name">Nombre</mfDefaultSorter>
+                    </th>
+                    <th style="width: 20%" class="text-center">
+                        <mfDefaultSorter [by]="sortByPrice">Precio</mfDefaultSorter>
+                    </th>
+                    <th style="width: 20%" class="text-center">
+                        <mfDefaultSorter by="quantity">Cantidad en stock</mfDefaultSorter>
+                    </th>
+                    <th style="width: 20%" class="text-center">
+                        <mfDefaultSorter by="available">Disponible</mfDefaultSorter>
+                    </th>
+                    <th style="width: 20%" class="text-center">Agregar al carrito</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let product of mf.data">
+                    <td>{{product.name  | uppercase}}</td>
+                    <td class="text-center">{{product.price}}</td>
+                    <td class="text-center">{{product.quantity}}</td>
+                    <td class="text-center">{{product.available | legibleBoolean }}</td>
+                    <td class="text-center">
+                        <span  *ngIf="product.available == true" class="btn btn-info" (click)="addToCart(product)"><i class="fas fa-plus" ></i></span><!-- <button (click)="remove(product)" class="btn btn-info"></button> -->
+                    </td>
+                </tr>
+                </tbody>
+                <tfoot>
+                <tr>
+                    <td colspan="5">
+                        <mfBootstrapPaginator [rowsOnPageSet]="[5,10,15, 100]"></mfBootstrapPaginator>
+                    </td>
+                </tr>
+                </tfoot>
+            </table>
+        </div>
+
+
+
+    </div>
+</div>

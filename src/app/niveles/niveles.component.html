@@ -1,0 +1,30 @@
+<div class="{{ containerClass }}">  
+  <div *ngIf="nivelesList" class="col-md-{{ nColumns }}" style="padding-right:0;"> 
+  <div  *ngFor="let item of nivelesList" class="panel-group" id="accordion{{ (item.id + item.name) | replaceSpaceXDash }}">
+    <div class="panel {{ panel_default }} {{ bgCPanel }}">
+      <div class="panel-heading {{ clrHeading }}"  role="button">
+        <h4 class="panel-title">
+          <a data-toggle="collapse" data-parent="#accordion" href="#collapse{{ (item.id + item.name) | replaceSpaceXDash }}" (click)="onNivelClicked(item)" >{{ tipoNivel }} {{item.name}}</a>
+        <!-- <a data-toggle="collapse" data-parent="#accordion" href="#collapse{{ (item.id + item.name) | replaceSpaceXDash }}"  (click)="onClick(item.id)" >{{ tipoNivel }} {{item.name}}</a> -->
+        </h4>
+      </div>
+      <div id="collapse{{ (item.id + item.name) | replaceSpaceXDash }}" class="panel-collapse collapse">
+        <div class="panel-body" style="padding-right:0;">
+          
+          <div *ngIf="item.sublevels">
+
+              <app-niveles [subLevelList]=item.sublevels></app-niveles>
+
+          </div>
+          <div *ngIf="!item.sublevels">
+
+              <input type="text" placeholder="Buscar..."/>
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div> 
+</div>
+</div>
