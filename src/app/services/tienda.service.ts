@@ -6,7 +6,7 @@ import { AngularFireDatabase, AngularFireList } from 'angularfire2/database';
 import { Sublevel } from '../models/sublevel';
 import { Product } from '../models/product';
 
-import { Subject } from '../../../LFGRM-EL-BARATON/node_modules/rxjs/Subject';
+import { Subject } from 'rxjs/Subject';
 import { Observable } from 'rxjs/Observable';
 
 @Injectable()
